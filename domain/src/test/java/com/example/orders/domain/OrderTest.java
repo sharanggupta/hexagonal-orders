@@ -116,6 +116,45 @@ class OrderTest {
                         "0.003"));
     }
 
+    @Test
+    void newOrderIsCreated() {
+        Order order = new Order(List.of(validItem()));
+
+        assertEquals(OrderStatus.CREATED, order.status());
+    }
+
+    @Test
+    void cancellingOrderPreservesItemsAndTotal() {
+        List<OrderItem> items = List.of(
+                new OrderItem(2, new BigDecimal("19.99")),
+                new OrderItem(3, new BigDecimal("0.10")));
+        Order order = new Order(items);
+
+        order.cancel();
+
+        assertEquals(OrderStatus.CANCELLED, order.status());
+        assertEquals(items, order.items());
+        assertEquals(0, new BigDecimal("40.28").compareTo(order.total()));
+    }
+
+    @Test
+    void rejectsCancellingAnAlreadyCancelledOrderWithoutChangingIt() {
+        List<OrderItem> items = List.of(
+                new OrderItem(2, new BigDecimal("19.99")),
+                new OrderItem(3, new BigDecimal("0.10")));
+        Order order = new Order(items);
+        order.cancel();
+
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                order::cancel);
+
+        assertEquals("Order is already cancelled", exception.getMessage());
+        assertEquals(OrderStatus.CANCELLED, order.status());
+        assertEquals(items, order.items());
+        assertEquals(0, new BigDecimal("40.28").compareTo(order.total()));
+    }
+
     private static OrderItem validItem() {
         return new OrderItem(1, BigDecimal.ONE);
     }
