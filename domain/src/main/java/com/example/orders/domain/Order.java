@@ -7,12 +7,12 @@ import java.util.Objects;
 import java.util.UUID;
 
 public final class Order {
-    private final OrderCreation creation;
+    private final OrderCreationFacts creationFacts;
     private final List<OrderItem> items;
     private OrderStatus status = OrderStatus.CREATED;
 
-    public Order(OrderCreation creation, List<OrderItem> items) {
-        this.creation = Objects.requireNonNull(creation, "Order creation is required");
+    public Order(OrderCreationFacts creationFacts, List<OrderItem> items) {
+        this.creationFacts = Objects.requireNonNull(creationFacts, "Order creation is required");
         Objects.requireNonNull(items, "Order items are required");
         this.items = List.copyOf(items);
         if (this.items.isEmpty()) {
@@ -20,27 +20,24 @@ public final class Order {
         }
     }
 
-    public Instant createdAt() {
-        return creation.createdAt();
+    public UUID id() {
+        return creationFacts.id();
     }
 
     public UUID customerId() {
-        return creation.customerId();
+        return creationFacts.customerId();
     }
 
-    public UUID id() {
-        return creation.id();
+    public Instant createdAt() {
+        return creationFacts.createdAt();
+    }
+
+    public List<OrderItem> items() {
+        return items;
     }
 
     public OrderStatus status() {
         return status;
-    }
-
-    public void cancel() {
-        if (status == OrderStatus.CANCELLED) {
-            throw new IllegalStateException("Order is already cancelled");
-        }
-        status = OrderStatus.CANCELLED;
     }
 
     public BigDecimal total() {
@@ -51,7 +48,10 @@ public final class Order {
         return total;
     }
 
-    public List<OrderItem> items() {
-        return items;
+    public void cancel() {
+        if (status == OrderStatus.CANCELLED) {
+            throw new IllegalStateException("Order is already cancelled");
+        }
+        status = OrderStatus.CANCELLED;
     }
 }

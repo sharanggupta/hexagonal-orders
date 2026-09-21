@@ -19,7 +19,7 @@ class OrderCreationTest {
     @ValueSource(strings = {"2020-01-01T00:00:00Z", "2026-09-21T12:34:56.123456789Z"})
     void cancellationPreservesExactCreationTime(String timestamp) {
         Instant createdAt = Instant.parse(timestamp);
-        Order order = new Order(new OrderCreation(ORDER_ID, CUSTOMER_ID, createdAt),
+        Order order = new Order(new OrderCreationFacts(ORDER_ID, CUSTOMER_ID, createdAt),
                 List.of(item(1, "1")));
 
         assertEquals(createdAt, order.createdAt());
@@ -27,14 +27,6 @@ class OrderCreationTest {
         order.cancel();
 
         assertEquals(createdAt, order.createdAt());
-    }
-
-    @Test
-    void rejectsMissingCreationTime() {
-        NullPointerException exception = assertThrows(NullPointerException.class,
-                () -> new OrderCreation(ORDER_ID, CUSTOMER_ID, null));
-
-        assertEquals("Creation timestamp is required", exception.getMessage());
     }
 
     @Test

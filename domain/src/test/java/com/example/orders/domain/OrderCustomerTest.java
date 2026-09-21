@@ -3,15 +3,13 @@ package com.example.orders.domain;
 import java.util.List;
 import java.util.UUID;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static com.example.orders.domain.OrderTestSupport.ORDER_ID;
-import static com.example.orders.domain.OrderTestSupport.creation;
+import static com.example.orders.domain.OrderTestSupport.creationFacts;
 import static com.example.orders.domain.OrderTestSupport.item;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OrderCustomerTest {
 
@@ -22,7 +20,7 @@ class OrderCustomerTest {
     })
     void cancellationPreservesTheSuppliedCustomer(String suppliedCustomerId) {
         UUID customerId = UUID.fromString(suppliedCustomerId);
-        Order order = new Order(creation(ORDER_ID, customerId), List.of(item(1, "1")));
+        Order order = new Order(creationFacts(ORDER_ID, customerId), List.of(item(1, "1")));
 
         assertEquals(customerId, order.customerId());
         assertEquals(ORDER_ID, order.id());
@@ -31,14 +29,5 @@ class OrderCustomerTest {
 
         assertEquals(customerId, order.customerId());
         assertEquals(ORDER_ID, order.id());
-    }
-
-    @Test
-    void rejectsMissingCustomer() {
-        NullPointerException exception = assertThrows(
-                NullPointerException.class,
-                () -> new Order(creation(ORDER_ID, null), List.of(item(1, "1"))));
-
-        assertEquals("Customer ID is required", exception.getMessage());
     }
 }

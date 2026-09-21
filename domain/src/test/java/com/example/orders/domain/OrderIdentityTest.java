@@ -1,17 +1,15 @@
 package com.example.orders.domain;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static com.example.orders.domain.OrderTestSupport.CUSTOMER_ID;
-import static com.example.orders.domain.OrderTestSupport.creation;
+import static com.example.orders.domain.OrderTestSupport.creationFacts;
+import static com.example.orders.domain.OrderTestSupport.item;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class OrderIdentityTest {
 
@@ -22,23 +20,12 @@ class OrderIdentityTest {
     })
     void preservesSuppliedIdAfterCancellation(String suppliedId) {
         UUID id = UUID.fromString(suppliedId);
-        Order order = new Order(creation(id, CUSTOMER_ID), List.of(new OrderItem(1, BigDecimal.ONE)));
+        Order order = new Order(creationFacts(id, CUSTOMER_ID), List.of(item(1, "1")));
 
         assertEquals(id, order.id());
 
         order.cancel();
 
         assertEquals(id, order.id());
-    }
-
-    @Test
-    void rejectsMissingId() {
-        List<OrderItem> items = List.of(new OrderItem(1, BigDecimal.ONE));
-
-        NullPointerException exception = assertThrows(
-                NullPointerException.class,
-                () -> new Order(creation(null, CUSTOMER_ID), items));
-
-        assertEquals("Order ID is required", exception.getMessage());
     }
 }

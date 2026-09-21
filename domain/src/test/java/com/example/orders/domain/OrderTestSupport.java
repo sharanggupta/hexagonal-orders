@@ -11,11 +11,13 @@ final class OrderTestSupport {
 
     static final UUID CUSTOMER_ID = UUID.fromString("c1234567-e89b-42d3-a456-426614174000");
 
+    static final Instant CREATED_AT = Instant.parse("2026-09-21T12:00:00Z");
+
     private OrderTestSupport() {
     }
 
-    static OrderCreation creation(UUID id, UUID customerId) {
-        return new OrderCreation(id, customerId, Instant.parse("2026-09-21T12:00:00Z"));
+    static OrderCreationFacts creationFacts(UUID id, UUID customerId) {
+        return new OrderCreationFacts(id, customerId, CREATED_AT);
     }
 
     static OrderItem item(int quantity, String unitPrice) {
