@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import static com.example.orders.domain.OrderTestSupport.CUSTOMER_ID;
 import static com.example.orders.domain.OrderTestSupport.ORDER_ID;
 import static com.example.orders.domain.OrderTestSupport.assertDecimalEquals;
+import static com.example.orders.domain.OrderTestSupport.creation;
 import static com.example.orders.domain.OrderTestSupport.item;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,7 +21,7 @@ class OrderTotalTest {
     @MethodSource("orderTotals")
     void calculatesTotalWithoutChangingItems(
             String scenario, List<OrderItem> items, String expectedTotal) {
-        Order order = new Order(ORDER_ID, CUSTOMER_ID, items);
+        Order order = new Order(creation(ORDER_ID, CUSTOMER_ID), items);
 
         BigDecimal total = order.total();
 

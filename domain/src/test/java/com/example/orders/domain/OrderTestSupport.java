@@ -1,6 +1,7 @@
 package com.example.orders.domain;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,6 +12,10 @@ final class OrderTestSupport {
     static final UUID CUSTOMER_ID = UUID.fromString("c1234567-e89b-42d3-a456-426614174000");
 
     private OrderTestSupport() {
+    }
+
+    static OrderCreation creation(UUID id, UUID customerId) {
+        return new OrderCreation(id, customerId, Instant.parse("2026-09-21T12:00:00Z"));
     }
 
     static OrderItem item(int quantity, String unitPrice) {

@@ -1,19 +1,18 @@
 package com.example.orders.domain;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 public final class Order {
-    private final UUID id;
-    private final UUID customerId;
+    private final OrderCreation creation;
     private final List<OrderItem> items;
     private OrderStatus status = OrderStatus.CREATED;
 
-    public Order(UUID id, UUID customerId, List<OrderItem> items) {
-        this.id = Objects.requireNonNull(id, "Order ID is required");
-        this.customerId = Objects.requireNonNull(customerId, "Customer ID is required");
+    public Order(OrderCreation creation, List<OrderItem> items) {
+        this.creation = Objects.requireNonNull(creation, "Order creation is required");
         Objects.requireNonNull(items, "Order items are required");
         this.items = List.copyOf(items);
         if (this.items.isEmpty()) {
@@ -21,12 +20,16 @@ public final class Order {
         }
     }
 
+    public Instant createdAt() {
+        return creation.createdAt();
+    }
+
     public UUID customerId() {
-        return customerId;
+        return creation.customerId();
     }
 
     public UUID id() {
-        return id;
+        return creation.id();
     }
 
     public OrderStatus status() {
