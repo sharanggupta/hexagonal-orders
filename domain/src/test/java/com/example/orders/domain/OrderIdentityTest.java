@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static com.example.orders.domain.OrderTestSupport.CUSTOMER_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -20,7 +21,7 @@ class OrderIdentityTest {
     })
     void preservesSuppliedIdAfterCancellation(String suppliedId) {
         UUID id = UUID.fromString(suppliedId);
-        Order order = new Order(id, List.of(new OrderItem(1, BigDecimal.ONE)));
+        Order order = new Order(id, CUSTOMER_ID, List.of(new OrderItem(1, BigDecimal.ONE)));
 
         assertEquals(id, order.id());
 
@@ -35,7 +36,7 @@ class OrderIdentityTest {
 
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new Order(null, items));
+                () -> new Order(null, CUSTOMER_ID, items));
 
         assertEquals("Order ID is required", exception.getMessage());
     }

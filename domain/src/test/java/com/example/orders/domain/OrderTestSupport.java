@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 final class OrderTestSupport {
     static final UUID ORDER_ID = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
 
+    static final UUID CUSTOMER_ID = UUID.fromString("c1234567-e89b-42d3-a456-426614174000");
+
     private OrderTestSupport() {
     }
 

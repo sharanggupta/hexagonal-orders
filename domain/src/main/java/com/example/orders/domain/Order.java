@@ -7,16 +7,22 @@ import java.util.UUID;
 
 public final class Order {
     private final UUID id;
+    private final UUID customerId;
     private final List<OrderItem> items;
     private OrderStatus status = OrderStatus.CREATED;
 
-    public Order(UUID id, List<OrderItem> items) {
+    public Order(UUID id, UUID customerId, List<OrderItem> items) {
         this.id = Objects.requireNonNull(id, "Order ID is required");
+        this.customerId = Objects.requireNonNull(customerId, "Customer ID is required");
         Objects.requireNonNull(items, "Order items are required");
         this.items = List.copyOf(items);
         if (this.items.isEmpty()) {
             throw new IllegalArgumentException("An order must contain at least one item");
         }
+    }
+
+    public UUID customerId() {
+        return customerId;
     }
 
     public UUID id() {
