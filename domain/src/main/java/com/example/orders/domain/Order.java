@@ -30,8 +30,7 @@ public final class Order {
     public BigDecimal total() {
         BigDecimal total = BigDecimal.ZERO;
         for (OrderItem item : items) {
-            BigDecimal itemTotal = item.unitPrice().multiply(BigDecimal.valueOf(item.quantity()));
-            total = total.add(itemTotal);
+            total = total.add(item.subtotal());
         }
         return total;
     }

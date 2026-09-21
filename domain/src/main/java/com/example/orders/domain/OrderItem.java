@@ -14,4 +14,8 @@ public record OrderItem(int quantity, BigDecimal unitPrice) {
             throw new IllegalArgumentException("Quantity must be greater than zero");
         }
     }
+
+    BigDecimal subtotal() {
+        return unitPrice.multiply(BigDecimal.valueOf(quantity));
+    }
 }
