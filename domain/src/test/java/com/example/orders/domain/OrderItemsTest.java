@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static com.example.orders.domain.OrderTestSupport.ORDER_ID;
 import static com.example.orders.domain.OrderTestSupport.item;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -19,7 +20,7 @@ class OrderItemsTest {
     void rejectsEmptyItems() {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> new Order(List.of()));
+                () -> new Order(ORDER_ID, List.of()));
 
         assertEquals("An order must contain at least one item", exception.getMessage());
     }
@@ -28,7 +29,7 @@ class OrderItemsTest {
     void rejectsMissingItems() {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
-                () -> new Order(null));
+                () -> new Order(ORDER_ID, null));
 
         assertEquals("Order items are required", exception.getMessage());
     }
@@ -37,7 +38,7 @@ class OrderItemsTest {
     void rejectsNullItem() {
         List<OrderItem> items = Arrays.asList(item(1, "1"), null);
 
-        assertThrows(NullPointerException.class, () -> new Order(items));
+        assertThrows(NullPointerException.class, () -> new Order(ORDER_ID, items));
     }
 
     @ParameterizedTest
@@ -45,7 +46,7 @@ class OrderItemsTest {
     void preservesNonEmptyItems(int itemCount) {
         List<OrderItem> items = Collections.nCopies(itemCount, item(1, "1"));
 
-        Order order = new Order(items);
+        Order order = new Order(ORDER_ID, items);
 
         assertEquals(items, order.items());
     }
@@ -54,7 +55,7 @@ class OrderItemsTest {
     void changingOriginalListDoesNotChangeOrder() {
         OrderItem item = item(1, "1");
         List<OrderItem> items = new ArrayList<>(List.of(item));
-        Order order = new Order(items);
+        Order order = new Order(ORDER_ID, items);
 
         items.clear();
 
@@ -64,7 +65,7 @@ class OrderItemsTest {
     @Test
     void returnedItemsCannotBeChanged() {
         OrderItem item = item(1, "1");
-        Order order = new Order(new ArrayList<>(List.of(item)));
+        Order order = new Order(ORDER_ID, new ArrayList<>(List.of(item)));
 
         assertThrows(UnsupportedOperationException.class, () -> order.items().clear());
 
