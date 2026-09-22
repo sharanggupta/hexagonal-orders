@@ -7,12 +7,16 @@ import java.util.Objects;
 import java.util.UUID;
 
 public final class Order {
-    private final OrderCreationFacts creationFacts;
+    private final UUID id;
+    private final UUID customerId;
+    private final Instant createdAt;
     private final List<OrderItem> items;
     private OrderStatus status = OrderStatus.CREATED;
 
-    public Order(OrderCreationFacts creationFacts, List<OrderItem> items) {
-        this.creationFacts = Objects.requireNonNull(creationFacts, "Order creation is required");
+    public Order(UUID id, UUID customerId, Instant createdAt, List<OrderItem> items) {
+        this.id = Objects.requireNonNull(id, "Order ID is required");
+        this.customerId = Objects.requireNonNull(customerId, "Customer ID is required");
+        this.createdAt = Objects.requireNonNull(createdAt, "Creation timestamp is required");
         Objects.requireNonNull(items, "Order items are required");
         for (OrderItem item : items) {
             Objects.requireNonNull(item, "Order items must not contain null");
@@ -24,15 +28,15 @@ public final class Order {
     }
 
     public UUID id() {
-        return creationFacts.id();
+        return id;
     }
 
     public UUID customerId() {
-        return creationFacts.customerId();
+        return customerId;
     }
 
     public Instant createdAt() {
-        return creationFacts.createdAt();
+        return createdAt;
     }
 
     public List<OrderItem> items() {

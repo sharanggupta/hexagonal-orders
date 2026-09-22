@@ -16,10 +16,6 @@ final class OrderTestSupport {
     private OrderTestSupport() {
     }
 
-    static OrderCreationFacts creationFacts(UUID id, UUID customerId) {
-        return new OrderCreationFacts(id, customerId, CREATED_AT);
-    }
-
     static OrderItem item(int quantity, String unitPrice) {
         return new OrderItem(quantity, new BigDecimal(unitPrice));
     }

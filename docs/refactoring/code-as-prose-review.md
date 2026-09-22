@@ -119,3 +119,10 @@ All actionable findings from the Clean Code and Code-as-Prose review are address
 The readability refactor preserves all 41 cases. The existing null-item test was strengthened, not duplicated: it first failed because the message was null, then passed after the guard was implemented. A final `mvn -o clean test` on Java 21 passed all 41 cases with no failures, errors, or skipped tests. No additional production interfaces or dependencies were introduced.
 
 Items marked Pass or Not applicable in the original principle tables require no artificial changes. The original findings above are historical evidence; this resolution supersedes all optional/deferred wording relating to them.
+
+
+## Design correction — 22 September 2026
+
+The user prefers four explicit Order constructor arguments over a parameter wrapper. Readability and meaningful domain cohesion take precedence over a numerical argument limit. Order now owns ID, customer ID, creation time and items directly; OrderCreationFacts and its fixture helper were removed. Their constructor guards now live in Order with the same messages.
+
+The three missing-value tests now invoke Order directly in OrderCreationTest. The sole removed test checked a null wrapper that no longer exists. All 40 remaining cases pass after `mvn -o clean test`; no business rule or behavior assertion was dropped. This is a behavior-preserving domain refactor with an intentional construction API change, not a new business feature. Historical recommendations to retain the wrapper are superseded.

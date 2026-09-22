@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import static com.example.orders.domain.OrderTestSupport.CREATED_AT;
 import static com.example.orders.domain.OrderTestSupport.CUSTOMER_ID;
 import static com.example.orders.domain.OrderTestSupport.ORDER_ID;
 import static com.example.orders.domain.OrderTestSupport.assertDecimalEquals;
-import static com.example.orders.domain.OrderTestSupport.creationFacts;
 import static com.example.orders.domain.OrderTestSupport.item;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -16,7 +16,7 @@ class OrderCancellationTest {
 
     @Test
     void newOrderIsCreated() {
-        Order order = new Order(creationFacts(ORDER_ID, CUSTOMER_ID), List.of(item(1, "1")));
+        Order order = new Order(ORDER_ID, CUSTOMER_ID, CREATED_AT, List.of(item(1, "1")));
 
         assertEquals(OrderStatus.CREATED, order.status());
     }
@@ -24,7 +24,7 @@ class OrderCancellationTest {
     @Test
     void cancellationChangesStatusAndPreservesItemsAndTotal() {
         List<OrderItem> items = pricedItems();
-        Order order = new Order(creationFacts(ORDER_ID, CUSTOMER_ID), items);
+        Order order = new Order(ORDER_ID, CUSTOMER_ID, CREATED_AT, items);
 
         order.cancel();
 
@@ -36,7 +36,7 @@ class OrderCancellationTest {
     @Test
     void rejectsCancellingAnAlreadyCancelledOrderWithoutChangingIt() {
         List<OrderItem> items = pricedItems();
-        Order order = new Order(creationFacts(ORDER_ID, CUSTOMER_ID), items);
+        Order order = new Order(ORDER_ID, CUSTOMER_ID, CREATED_AT, items);
         order.cancel();
 
         IllegalStateException exception = assertThrows(

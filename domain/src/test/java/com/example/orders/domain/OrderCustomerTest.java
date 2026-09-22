@@ -6,8 +6,8 @@ import java.util.UUID;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static com.example.orders.domain.OrderTestSupport.CREATED_AT;
 import static com.example.orders.domain.OrderTestSupport.ORDER_ID;
-import static com.example.orders.domain.OrderTestSupport.creationFacts;
 import static com.example.orders.domain.OrderTestSupport.item;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,7 +20,7 @@ class OrderCustomerTest {
     })
     void cancellationPreservesTheSuppliedCustomer(String suppliedCustomerId) {
         UUID customerId = UUID.fromString(suppliedCustomerId);
-        Order order = new Order(creationFacts(ORDER_ID, customerId), List.of(item(1, "1")));
+        Order order = new Order(ORDER_ID, customerId, CREATED_AT, List.of(item(1, "1")));
 
         assertEquals(customerId, order.customerId());
         assertEquals(ORDER_ID, order.id());
