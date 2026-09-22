@@ -85,3 +85,22 @@ Verification: `mvn -o clean test` on GraalVM Java 21.0.7 completed successfully 
 A null element still produces the existing `NullPointerException` from `List.copyOf`. A domain-specific error message would improve diagnostics, but would change observable behavior. Address it in a separate RED → GREEN cycle if desired.
 
 Final code-guardian review: **approved**. All original cases, input values, decimal scales, and assertions were checked against baseline `18a585c`; no Critical, Major, or Minor regressions were found.
+
+
+## Resolution — 21 September 2026
+
+All actionable findings from the Clean Code and Code-as-Prose review are addressed:
+
+| Finding | Resolution |
+|---|---|
+| Validation hidden inside fixtures | OrderCreationFactsTest directly invokes the record constructor for missing ID, customer ID, and timestamp. |
+| Unclear creation name | Renamed OrderCreation to OrderCreationFacts; aligned field, parameter, and fixture names. |
+| Mixed declaration narrative | Order now presents identity, customer, timestamp, items, status, total, then cancellation. |
+| Mixed test ownership | OrderCreationFactsTest owns record invariants; OrderCreationTest owns order-level creation behavior. |
+| Inconsistent identity-test fixtures | Identity tests use the same item helper as neighboring order tests. |
+| Formatting noise | Removed the trailing blank line in OrderItemsTest. |
+| Missing null-item diagnostic | Explicitly reject null entries with NullPointerException and “Order items must not contain null”; preserve defensive copying. |
+
+The readability refactor preserves all 41 cases. The existing null-item test was strengthened, not duplicated: it first failed because the message was null, then passed after the guard was implemented. A final `mvn -o clean test` on Java 21 passed all 41 cases with no failures, errors, or skipped tests. No additional production interfaces or dependencies were introduced.
+
+Items marked Pass or Not applicable in the original principle tables require no artificial changes. The original findings above are historical evidence; this resolution supersedes all optional/deferred wording relating to them.
