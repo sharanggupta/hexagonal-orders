@@ -40,7 +40,10 @@ class OrderItemsTest {
     void rejectsNullItem() {
         List<OrderItem> items = Arrays.asList(item(1, "1"), null);
 
-        assertThrows(NullPointerException.class, () -> new Order(creationFacts(ORDER_ID, CUSTOMER_ID), items));
+        NullPointerException exception = assertThrows(NullPointerException.class,
+                () -> new Order(creationFacts(ORDER_ID, CUSTOMER_ID), items));
+
+        assertEquals("Order items must not contain null", exception.getMessage());
     }
 
     @ParameterizedTest

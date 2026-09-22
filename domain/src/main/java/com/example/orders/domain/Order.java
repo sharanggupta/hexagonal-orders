@@ -14,6 +14,9 @@ public final class Order {
     public Order(OrderCreationFacts creationFacts, List<OrderItem> items) {
         this.creationFacts = Objects.requireNonNull(creationFacts, "Order creation is required");
         Objects.requireNonNull(items, "Order items are required");
+        for (OrderItem item : items) {
+            Objects.requireNonNull(item, "Order items must not contain null");
+        }
         this.items = List.copyOf(items);
         if (this.items.isEmpty()) {
             throw new IllegalArgumentException("An order must contain at least one item");
