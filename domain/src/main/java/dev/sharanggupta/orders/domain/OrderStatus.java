@@ -1,4 +1,4 @@
-package com.example.orders.domain;
+package dev.sharanggupta.orders.domain;
 
 public enum OrderStatus {
     CREATED,

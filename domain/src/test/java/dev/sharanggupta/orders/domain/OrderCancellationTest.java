@@ -1,14 +1,14 @@
-package com.example.orders.domain;
+package dev.sharanggupta.orders.domain;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import static com.example.orders.domain.OrderTestSupport.CREATED_AT;
-import static com.example.orders.domain.OrderTestSupport.CUSTOMER_ID;
-import static com.example.orders.domain.OrderTestSupport.ORDER_ID;
-import static com.example.orders.domain.OrderTestSupport.assertDecimalEquals;
-import static com.example.orders.domain.OrderTestSupport.item;
+import static dev.sharanggupta.orders.domain.OrderTestSupport.CREATED_AT;
+import static dev.sharanggupta.orders.domain.OrderTestSupport.CUSTOMER_ID;
+import static dev.sharanggupta.orders.domain.OrderTestSupport.ORDER_ID;
+import static dev.sharanggupta.orders.domain.OrderTestSupport.assertDecimalEquals;
+import static dev.sharanggupta.orders.domain.OrderTestSupport.item;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

@@ -1,4 +1,4 @@
-package com.example.orders.domain;
+package dev.sharanggupta.orders.domain;
 
 import java.util.List;
 import java.util.UUID;
@@ -6,9 +6,9 @@ import java.util.UUID;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static com.example.orders.domain.OrderTestSupport.CREATED_AT;
-import static com.example.orders.domain.OrderTestSupport.CUSTOMER_ID;
-import static com.example.orders.domain.OrderTestSupport.item;
+import static dev.sharanggupta.orders.domain.OrderTestSupport.CREATED_AT;
+import static dev.sharanggupta.orders.domain.OrderTestSupport.CUSTOMER_ID;
+import static dev.sharanggupta.orders.domain.OrderTestSupport.item;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class OrderIdentityTest {
