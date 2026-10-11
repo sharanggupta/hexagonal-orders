@@ -1,4 +1,4 @@
-# Hexagonal Orders
+# Orderly
 
 A learning project: moving from controller-service-repository habits to a hexagonal design, one failing test at a time.
 
