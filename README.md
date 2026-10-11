@@ -35,7 +35,7 @@ Each layer is a Maven module, and a module's POM lists only what it may depend o
 
 The domain enforces: an order needs an ID, a customer reference, a creation time and at least one non-null item; items are copied and exposed read-only; the total uses exact decimal arithmetic; and an order can be cancelled once. It deliberately does not generate IDs, read the clock, remember orders, or know whether a customer exists.
 
-The application layer lives on the `claude/keen-hopper-06uq9f` branch until it is merged.
+The application layer is being built on a separate branch and will be merged once its first use case is complete.
 
 ## How it is built
 
